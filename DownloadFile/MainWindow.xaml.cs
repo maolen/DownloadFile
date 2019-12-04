@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Microsoft.Win32;
+using System.Net;
 using System.Threading;
 using System.Windows;
 
@@ -27,10 +28,14 @@ namespace DownloadFile
 
         private void DownloadFile()
         {
-            using (var client = new WebClient())
-            { 
-                client.DownloadFile(UrlAddress, $@"{UrlAddress.Substring(UrlAddress.Length - 5)}");
-            }
+            var dialog = new SaveFileDialog();
+            if(dialog.ShowDialog() == true)
+            {
+                using (var client = new WebClient())
+                {
+                    client.DownloadFile(UrlAddress, dialog.FileName);
+                }
+            }          
         }
     }
 }
